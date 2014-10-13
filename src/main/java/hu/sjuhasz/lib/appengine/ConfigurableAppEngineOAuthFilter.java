@@ -1,7 +1,5 @@
 package hu.sjuhasz.lib.appengine;
 
-import hu.sjuhasz.demo.appengine.todolistdemo.Utils;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -87,8 +85,7 @@ public class ConfigurableAppEngineOAuthFilter extends AbstractAppEngineOAuthFilt
 		if (clientSecrets == null) {
 			clientSecrets = GoogleClientSecrets.load(
 					JSON_FACTORY,
-					new InputStreamReader(Utils.class
-							.getResourceAsStream(clientSecretResource)));
+					new InputStreamReader(this.getClass().getResourceAsStream(clientSecretResource)));
 		}
 		return clientSecrets;
 	}	
@@ -147,7 +144,7 @@ public class ConfigurableAppEngineOAuthFilter extends AbstractAppEngineOAuthFilt
 			final Credential credential) throws IOException,
 			ServletException {
 		try {
-			OAuthContext.createContext(userId, credential);
+			OAuthContext.createContext(HTTP_TRANSPORT, JSON_FACTORY, userId, credential);
 			chain.doFilter(request, response);
 		} finally {
 			OAuthContext.cleanup();
