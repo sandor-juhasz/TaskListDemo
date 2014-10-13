@@ -20,26 +20,6 @@
         <servlet-name>helloServlet</servlet-name>
         <servlet-class>hu.sjuhasz.demo.appengine.todolistdemo.HelloServlet</servlet-class>
     </servlet>
-
-	<servlet>
-	    <servlet-name>oauth2Callback</servlet-name>
-	    <servlet-class>hu.sjuhasz.demo.appengine.todolistdemo.AuthorizationCodeCallbackServlet</servlet-class>
-	</servlet>
-	
-	<servlet>
-	    <servlet-name>authorizationCodeServlet</servlet-name>
-	    <servlet-class>hu.sjuhasz.demo.appengine.todolistdemo.AuthorizationCodeServlet</servlet-class>
-	</servlet>
-
-    <!--  <servlet-mapping>   
-        <servlet-name>oauth2Callback</servlet-name>
-        <url-pattern>/oauth2callback</url-pattern>
-    </servlet-mapping>    
-    
-    <servlet-mapping>   
-        <servlet-name>authorizationCodeServlet</servlet-name>
-        <url-pattern>/authCode</url-pattern>
-    </servlet-mapping>   -->   
         
     <servlet-mapping>   
         <servlet-name>helloServlet</servlet-name>
