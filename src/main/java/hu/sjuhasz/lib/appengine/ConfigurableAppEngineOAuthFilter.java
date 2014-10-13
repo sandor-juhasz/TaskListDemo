@@ -151,5 +151,4 @@ public class ConfigurableAppEngineOAuthFilter extends AbstractAppEngineOAuthFilt
 		}		
 	}
 	
-	
 }
