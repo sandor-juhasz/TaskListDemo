@@ -4,7 +4,11 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
    <filter>
        <filter-name>OAuthFilter</filter-name>
-       <filter-class>hu.sjuhasz.demo.appengine.todolistdemo.OAuthFilter</filter-class>
+       <filter-class>hu.sjuhasz.lib.appengine.ConfigurableAppEngineOAuthFilter</filter-class>
+       <init-param>
+           <param-name>scopes</param-name>
+           <param-value>https://www.googleapis.com/auth/tasks.readonly</param-value>
+       </init-param>
    </filter>
    
    <filter-mapping>
