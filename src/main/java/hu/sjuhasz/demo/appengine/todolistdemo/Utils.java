@@ -38,7 +38,7 @@ public class Utils {
 
 	private static GoogleClientSecrets clientSecrets = null;
 
-	static GoogleClientSecrets getClientCredential() throws IOException {
+	public static GoogleClientSecrets getClientCredential() throws IOException {
 		if (clientSecrets == null) {
 			clientSecrets = GoogleClientSecrets.load(
 					JSON_FACTORY,
@@ -57,13 +57,13 @@ public class Utils {
 		return clientSecrets;
 	}
 
-	static String getRedirectUri(HttpServletRequest req) {
+	public static String getRedirectUri(HttpServletRequest req) {
 		GenericUrl url = new GenericUrl(req.getRequestURL().toString());
 		url.setRawPath("/oauth2callback");
 		return url.build();
 	}
 
-	static GoogleAuthorizationCodeFlow newFlow() throws IOException {
+	public static GoogleAuthorizationCodeFlow newFlow() throws IOException {
 		return new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT,
 				JSON_FACTORY, getClientCredential(),
 				Collections.singleton(TasksScopes.TASKS_READONLY))
@@ -71,7 +71,7 @@ public class Utils {
 				.setAccessType("offline").build();
 	}
 
-	static Tasks getTaskClient() throws IOException {
+	public static Tasks getTaskClient() throws IOException {
 		String userId = UserServiceFactory.getUserService().getCurrentUser()
 				.getUserId();
 		Credential credential = newFlow().loadCredential(userId);
@@ -83,7 +83,7 @@ public class Utils {
 	 * Returns an {@link IOException} (but not a subclass) in order to work
 	 * around restrictive GWT serialization policy.
 	 */
-	static IOException wrappedIOException(IOException e) {
+	public static IOException wrappedIOException(IOException e) {
 		if (e.getClass() == IOException.class) {
 			return e;
 		}

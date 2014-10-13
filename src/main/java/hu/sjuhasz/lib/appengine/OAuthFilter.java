@@ -1,4 +1,6 @@
-package hu.sjuhasz.demo.appengine.todolistdemo;
+package hu.sjuhasz.lib.appengine;
+
+import hu.sjuhasz.demo.appengine.todolistdemo.Utils;
 
 import java.io.IOException;
 
@@ -108,8 +110,6 @@ public class OAuthFilter implements Filter {
 			}
 		} 
 	}
-	
-	
 
 	public void destroy() {
 	}
