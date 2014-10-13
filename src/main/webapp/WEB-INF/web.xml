@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <servlet>
+        <servlet-name>helloServlet</servlet-name>
+        <servlet-class>hu.sjuhasz.demo.appengine.todolistdemo.HelloServlet</servlet-class>
+    </servlet>
+
+	<servlet>
+	    <servlet-name>oauth2Callback</servlet-name>
+	    <servlet-class>hu.sjuhasz.demo.appengine.todolistdemo.AuthorizationCodeCallbackServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+	    <servlet-name>authorizationCodeServlet</servlet-name>
+	    <servlet-class>hu.sjuhasz.demo.appengine.todolistdemo.AuthorizationCodeServlet</servlet-class>
+	</servlet>
+
+    <servlet-mapping>   
+        <servlet-name>oauth2Callback</servlet-name>
+        <url-pattern>/oauth2callback</url-pattern>
+    </servlet-mapping>    
+    
+    <servlet-mapping>   
+        <servlet-name>authorizationCodeServlet</servlet-name>
+        <url-pattern>/authCode</url-pattern>
+    </servlet-mapping>    
+        
+    <servlet-mapping>   
+        <servlet-name>helloServlet</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+    
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>any</web-resource-name>
+      <url-pattern>/*</url-pattern>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>*</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+          
+</web-app>
