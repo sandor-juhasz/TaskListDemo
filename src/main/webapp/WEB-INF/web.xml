@@ -2,6 +2,16 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+   <filter>
+       <filter-name>OAuthFilter</filter-name>
+       <filter-class>hu.sjuhasz.demo.appengine.todolistdemo.OAuthFilter</filter-class>
+   </filter>
+   
+   <filter-mapping>
+       <filter-name>OAuthFilter</filter-name>
+       <url-pattern>/*</url-pattern>
+   </filter-mapping>
+
     <servlet>
         <servlet-name>helloServlet</servlet-name>
         <servlet-class>hu.sjuhasz.demo.appengine.todolistdemo.HelloServlet</servlet-class>
