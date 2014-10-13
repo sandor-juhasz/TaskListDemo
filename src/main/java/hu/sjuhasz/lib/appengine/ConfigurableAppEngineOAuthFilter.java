@@ -10,11 +10,16 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
+import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.appengine.datastore.AppEngineDataStoreFactory;
 import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -112,7 +117,7 @@ public class ConfigurableAppEngineOAuthFilter extends AbstractAppEngineOAuthFilt
 	}
 
 	@Override
-	protected AuthorizationCodeFlow getFlow() throws IOException {
+	public AuthorizationCodeFlow getFlow() throws IOException {
 		if (flow == null) {
 			flow =  new GoogleAuthorizationCodeFlow.Builder(HTTP_TRANSPORT,
 					JSON_FACTORY, 
@@ -130,4 +135,24 @@ public class ConfigurableAppEngineOAuthFilter extends AbstractAppEngineOAuthFilt
 		resp.sendRedirect(redirectAfterCallback);
 	}
 
+	/**
+	 * Adding thread local flow.
+	 */
+	@Override
+	protected void callWithOAuth(
+			ServletRequest request,
+			ServletResponse response, 
+			FilterChain chain,
+			final String userId,
+			final Credential credential) throws IOException,
+			ServletException {
+		try {
+			OAuthContext.createContext(userId, credential);
+			chain.doFilter(request, response);
+		} finally {
+			OAuthContext.cleanup();
+		}		
+	}
+	
+	
 }

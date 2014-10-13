@@ -76,7 +76,7 @@ public abstract class AbstractOAuthFilter implements Filter {
 					System.out.println("[OAuthFilter] existing credential for user was found.");
 					System.out.println("[OAuthFilterFilter] calling protected resource. "+req.getRequestURI());
 					try {
-						chain.doFilter(request, response);
+						callWithOAuth(request, response, chain, userId, credential);						
 					} catch (Exception e) {
 						if (credential.getAccessToken() == null) {
 							System.out.println("[OAuthFilter] null access token was detected after processing protected resource. Reauthorizing...");
@@ -132,6 +132,15 @@ public abstract class AbstractOAuthFilter implements Filter {
 	    String location = authorizationUrl.build();
 	    System.out.println("[OAuthFilter] Redirecting to "+location);
 	    resp.sendRedirect(location);									
+	}
+	
+	protected void callWithOAuth(
+			final ServletRequest request, 
+			final ServletResponse response,
+			final FilterChain chain,
+			final String userId,
+			final Credential credential) throws IOException, ServletException {
+		chain.doFilter(request, response);		
 	}
 	
 	protected abstract boolean isAuthorizationCodeCallbackRequest(HttpServletRequest req);

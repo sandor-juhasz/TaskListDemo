@@ -1,5 +1,7 @@
 package hu.sjuhasz.demo.appengine.todolistdemo;
 
+import hu.sjuhasz.lib.appengine.OAuthContext;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class HelloServlet extends HttpServlet {
 
 		GoogleClientSecrets secrets;
 		
+		System.out.println(OAuthContext.getContext().getCredential().getAccessToken());
 		
 		resp.setContentType("text/html");
 		PrintWriter writer = resp.getWriter();
