@@ -27,7 +27,7 @@
 	    <servlet-class>hu.sjuhasz.demo.appengine.todolistdemo.AuthorizationCodeServlet</servlet-class>
 	</servlet>
 
-    <servlet-mapping>   
+    <!--  <servlet-mapping>   
         <servlet-name>oauth2Callback</servlet-name>
         <url-pattern>/oauth2callback</url-pattern>
     </servlet-mapping>    
@@ -35,12 +35,12 @@
     <servlet-mapping>   
         <servlet-name>authorizationCodeServlet</servlet-name>
         <url-pattern>/authCode</url-pattern>
-    </servlet-mapping>    
+    </servlet-mapping>   -->   
         
     <servlet-mapping>   
         <servlet-name>helloServlet</servlet-name>
         <url-pattern>/*</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping> 
     
   <security-constraint>
     <web-resource-collection>
