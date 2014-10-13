@@ -88,8 +88,9 @@ public abstract class AbstractOAuthFilter implements Filter {
 				if (req.getRequestURI().startsWith("/_ah/")) {
 					System.out.println("[OAuthFilter] Processing admin request.");
 					chain.doFilter(request, response);
+				} else {
+					System.out.println("[OAuthFilter] User is not logged in. Please configure user login first.");
 				}
-				System.out.println("[OAuthFilter] User is not logged in. Please configure user login first.");
 			}
 		} 
 	}

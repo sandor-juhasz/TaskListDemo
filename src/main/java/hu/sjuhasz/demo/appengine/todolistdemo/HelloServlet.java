@@ -23,23 +23,29 @@ public class HelloServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		OAuthContext context = OAuthContext.getContext();
-		Tasks service = new Tasks.Builder(
-				context.getTransport(),
-				context.getJsonFactory(),
-				context.getCredential())
-			.setApplicationName("DemoProject")
-			.build();
-		List<TaskList> taskLists = service.tasklists().list().execute().getItems();
-		resp.setContentType("text/html");
-		PrintWriter writer = resp.getWriter();
-		writer.println("<html><head><title>Task lists</title></head><body><h1>Task lists</h1>");
-		writer.println("Owner: "+req.getUserPrincipal().getName());
-		writer.println("Number of task lists: "+taskLists.size());
-		writer.println("<ul>");
-		for (TaskList taskList : taskLists) {
-			writer.format("<li>%s</li>", taskList.getTitle());
+		
+		//System.out.format("Access token: %s, time left: %d, Refresh token: %s\n", context.getCredential().getAccessToken(), context.getCredential().getExpiresInSeconds(), context.getCredential().getRefreshToken());
+		try {
+			Tasks service = new Tasks.Builder(
+					context.getTransport(),
+					context.getJsonFactory(),
+					context.getCredential())
+				.setApplicationName("DemoProject")
+				.build();
+			List<TaskList> taskLists = service.tasklists().list().execute().getItems();
+			resp.setContentType("text/html");
+			PrintWriter writer = resp.getWriter();
+			writer.println("<html><head><title>Task lists</title></head><body><h1>Task lists</h1>");
+			writer.println("Owner: "+req.getUserPrincipal().getName());
+			writer.println("Number of task lists: "+taskLists.size());
+			writer.println("<ul>");
+			for (TaskList taskList : taskLists) {
+				writer.format("<li>%s</li>", taskList.getTitle());
+			}
+			writer.println("</body></html>");
+		} catch (Exception e) {
+			e.printStackTrace(resp.getWriter());
 		}
-		writer.println("</body></html>");
 	}
 	
 }
