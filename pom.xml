@@ -36,6 +36,11 @@
           <artifactId>google-oauth-client-appengine</artifactId>
           <version>1.19.0</version>
       </dependency>
-          
+      
+      <dependency>
+    	<groupId>hu.sjuhasz.lib</groupId>
+    	<artifactId>AppengineLib</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>      
+      </dependency>    
     </dependencies>
 </project>
