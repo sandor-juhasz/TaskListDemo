@@ -110,7 +110,9 @@ public class ConfigurableAppEngineOAuthFilter extends AbstractAppEngineOAuthFilt
 	protected String getAuthorizationCodeCallbackUri(HttpServletRequest req) {
 		GenericUrl url = new GenericUrl(req.getRequestURL().toString());
 		url.setRawPath(callbackPath);
-		return url.build();
+		String urlString = url.build();
+		System.out.println("[ConifugrableAppEngineOAuthFilter] using redirect url: "+urlString);
+		return urlString;
 	}
 
 	@Override
@@ -121,7 +123,8 @@ public class ConfigurableAppEngineOAuthFilter extends AbstractAppEngineOAuthFilt
 					getClientSecrets(),
 					scopes)
 					.setDataStoreFactory(DATA_STORE_FACTORY)
-					.setAccessType("offline").build();
+					.setAccessType("offline")
+					.setApprovalPrompt("force").build();
 		}
 		return flow;
 	}
