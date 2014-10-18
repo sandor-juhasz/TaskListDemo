@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.api.client.auth.oauth2.TokenResponseException;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.services.tasks.Tasks;
 import com.google.api.services.tasks.model.TaskList;
@@ -28,7 +29,7 @@ public class HelloServlet extends HttpServlet {
 			PrintWriter writer = resp.getWriter();
 			writer.println("<html><head><title>Task lists</title></head><body><h1>Task lists</h1>");
 			writer.println("Owner: "+req.getUserPrincipal().getName()+"<br>");
-			writer.format("Debug info: access token: %s, time left: %d, Refresh token: %s\n", context.getCredential().getAccessToken(), context.getCredential().getExpiresInSeconds(), context.getCredential().getRefreshToken());
+			writer.format("Debug info: <br/>access token: %s,<br/> time left: %d,<br/> Refresh token: %s<br/>\n", context.getCredential().getAccessToken(), context.getCredential().getExpiresInSeconds(), context.getCredential().getRefreshToken());
 			List<TaskList> taskLists = getTaskLists();
 			writer.println("Number of task lists: "+taskLists.size());
 			writer.println("<ul>");
@@ -37,11 +38,15 @@ public class HelloServlet extends HttpServlet {
 			}
 			writer.println("</body></html>");
 		} catch (GoogleJsonResponseException e) {
+			// No refresh token was found.
 			if (e.getStatusCode() == 401) {
 				context.getCredential().setAccessToken(null);
 			}
 			throw e;
-		}catch (Exception e) {
+		} catch (TokenResponseException e) {
+			// Refresh token is invalid. Re-authorizing...
+			throw e;
+		} catch (Exception e) {
 			PrintWriter w = resp.getWriter();
 			w.format("Access token: %s, time left: %d, Refresh token: %s\n", context.getCredential().getAccessToken(), context.getCredential().getExpiresInSeconds(), context.getCredential().getRefreshToken());
 			e.printStackTrace(w);
