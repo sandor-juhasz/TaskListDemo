@@ -29,13 +29,7 @@ public class HelloServlet extends HttpServlet {
 			writer.println("<html><head><title>Task lists</title></head><body><h1>Task lists</h1>");
 			writer.println("Owner: "+req.getUserPrincipal().getName()+"<br>");
 			writer.format("Debug info: access token: %s, time left: %d, Refresh token: %s\n", context.getCredential().getAccessToken(), context.getCredential().getExpiresInSeconds(), context.getCredential().getRefreshToken());
-			Tasks service = new Tasks.Builder(
-					context.getTransport(),
-					context.getJsonFactory(),
-					context.getCredential())
-				.setApplicationName("DemoProject")
-				.build();
-			List<TaskList> taskLists = service.tasklists().list().execute().getItems();
+			List<TaskList> taskLists = getTaskLists();
 			writer.println("Number of task lists: "+taskLists.size());
 			writer.println("<ul>");
 			for (TaskList taskList : taskLists) {
@@ -52,6 +46,17 @@ public class HelloServlet extends HttpServlet {
 			w.format("Access token: %s, time left: %d, Refresh token: %s\n", context.getCredential().getAccessToken(), context.getCredential().getExpiresInSeconds(), context.getCredential().getRefreshToken());
 			e.printStackTrace(w);
 		}
+	}
+	
+	private List<TaskList> getTaskLists() throws Exception {
+		OAuthContext context = OAuthContext.getContext();
+		Tasks service = new Tasks.Builder(
+				context.getTransport(),
+				context.getJsonFactory(),
+				context.getCredential())
+			.setApplicationName("DemoProject")
+			.build();
+		return service.tasklists().list().execute().getItems();
 	}
 	
 }
