@@ -16,6 +16,9 @@
     
     <properties>
         <appengine.project.id>bionic-cosmos-710</appengine.project.id>
+        
+        <!-- Put client_secret.json into this directory! -->
+        <oauth.credential.dir>c:/dev/Projects/credentials/TodoListDemo</oauth.credential.dir>
     </properties>
 
     <dependencies>        
@@ -31,22 +34,5 @@
     	<version>0.0.1-SNAPSHOT</version>      
       </dependency>    
     </dependencies>
-    
-    <build>
-     <plugins>
-       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-war-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <webResources>
-            <resource>
-              <directory>c:/dev/credentials/TodoListDemo</directory>
-              <targetPath>WEB-INF/classes</targetPath>
-            </resource>
-          </webResources>
-        </configuration>
-      </plugin>
-     </plugins>    
-    </build>
+
 </project>
